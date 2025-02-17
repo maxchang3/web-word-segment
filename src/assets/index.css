@@ -1,0 +1,8 @@
+a {
+    @apply transition-colors hover:text-foreground;
+}
+
+html,
+body {
+    touch-action: manipulation;
+}
