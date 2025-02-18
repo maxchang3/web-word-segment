@@ -11,7 +11,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "test": "vitest"
   },
   "dependencies": {
     "@unocss/reset": "^65.5.0",
@@ -42,6 +43,7 @@
     "unocss-preset-shadcn": "^0.3.2",
     "vite": "^6.0.11",
     "vite-plugin-vue-devtools": "^7.7.2",
+    "vitest": "^3.0.5",
     "vue-tsc": "^2.2.0"
   },
   "pnpm": {
