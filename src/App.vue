@@ -23,7 +23,6 @@ const URLText = decodeURIComponent(
 const inputText = ref(URLText)
 const segmented = ref<string[]>([])
 const selectedIndices = ref(new Set<number>())
-const autoSegment = ref(true)
 const jiebaLoaded = ref(false)
 
 const segment = useDebounceFn(async () => {
@@ -40,11 +39,6 @@ const clearInput = () => {
 
 const resetSelect = () => {
     selectedIndices.value.clear()
-}
-
-const handleInput = () => {
-    if (!autoSegment.value) return
-    segment()
 }
 
 const copyToClipboard = () => {
@@ -108,7 +102,7 @@ jieba.init().then(() => {
                         v-model="inputText"
                         placeholder="输入文本进行分词..."
                         class="flex-grow resize-none min-h-30% max-h-30%"
-                        @input="handleInput"
+                        @input="segment"
                     />
                     <div class="flex items-center flex-gap-4">
                         <Button variant="outline" @click="clearInput">
