@@ -1,4 +1,4 @@
-import { fileURLToPath, URL } from 'node:url'
+import { URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
@@ -13,7 +13,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url)),
+            '@/': new URL('./src/', import.meta.url).pathname,
         },
     },
     // This is a known issue when using WebAssembly with Vite 5.x~6.x
