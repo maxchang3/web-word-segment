@@ -93,7 +93,7 @@ jieba.init().then(() => {
                     <ThemeToggle />
                 </CardTitle>
                 <CardDescription class="text-sm text-center">
-                    基于 <a href="https://github.com/fengkx/jieba-wasm" target="_blank">jieba-wasm</a> 本地运行，不会上传任何数据。
+                    基于 <a href="https://github.com/fengkx/jieba-wasm" target="_blank">jieba-wasm</a> 本地运行，不会上传任何数据🔒。
                 </CardDescription>
             </CardHeader>
             <CardContent class="flex flex-col h-[calc(100%-7rem)]">
