@@ -7,6 +7,13 @@ class Jieba {
     }
 
     async init(): Promise<void> {
+        if (this.isReady) {
+            return
+        }
+        if (typeof init !== 'function') { // for Node.js & Testing
+            this.isReady = true
+            return
+        }
         await init()
         this.isReady = true
     }
@@ -15,7 +22,13 @@ class Jieba {
         if (!this.isReady) {
             throw new Error('Jieba not initialized')
         }
-        return cut(text)
+        text = text.trim()
+        if (text === '') {
+            return []
+        }
+        return cut(text).filter( // Filter punctuation (exclude hypen) and spaces
+            (word: string) => !word.match(/[\p{P}--\-]|\s/gv),
+        )
     }
 }
 

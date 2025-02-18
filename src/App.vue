@@ -28,13 +28,7 @@ const jiebaLoaded = ref(false)
 
 const segment = useDebounceFn(async () => {
     if (!jiebaLoaded.value) return
-    let text = inputText.value.trim()
-    if (text.length === 0) {
-        segmented.value = []
-        return
-    }
-    text = text.replace(/[\p{P}\s]/gv, '')
-    segmented.value = await jieba.cut(text)
+    segmented.value = await jieba.cut(inputText.value)
     selectedIndices.value.clear()
 }, 500)
 
