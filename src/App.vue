@@ -123,7 +123,8 @@ jieba.init().then(() => {
                     </div>
                     <ScrollArea class="flex-grow h-full border rounded-lg">
                         <Tag
-                            v-for="(word, index) in segmented" :key="index" class="m-1"
+                            v-for="(word, index) in segmented" :key="index"
+                            class="m-1 overflow-hidden max-w-full truncate"
                             :variant="selectedIndices.has(index) ? 'active' : 'default'"
                             @click="switchSelectState(index)"
                         >
