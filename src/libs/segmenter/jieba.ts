@@ -5,12 +5,13 @@ class JiebaSegmenter implements Segmenter {
     cut: ((text: string) => Promise<string[]>) | undefined
 
     async init() {
-        const { default: init, cut } = await import('jieba-wasm')
-        if (typeof init !== 'function') { // for Node.js & Testing
-            this.isReady = true
-            return
+        let { default: entry, cut } = await import('jieba-wasm')
+        if (typeof entry !== 'function') { // for Node.js & Testing
+            // @ts-expect-error for Node.js
+            cut = entry.cut
+        } else {
+            await entry()
         }
-        await init()
         this.cut = async (text: string) => cut(text) as string[]
         this.isReady = true
     }
