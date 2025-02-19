@@ -1,6 +1,6 @@
 # web-word-segment
 
-A Web App for Chinese Word Segmentation based on [jieba-wasm](https://github.com/fengkx/jieba-wasm).
+A Web App for Chinese Word Segmentation based on [jieba-wasm](https://github.com/fengkx/jieba-wasm) and [Intl.Segmenter](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter).
 
 基于 [jieba-wasm](https://github.com/fengkx/jieba-wasm) 和 [Intl.Segmenter](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter) 的中文分词 Web 应用。
 
