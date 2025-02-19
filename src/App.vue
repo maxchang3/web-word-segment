@@ -5,7 +5,7 @@ import { TextArea } from '@/components/ui/textarea'
 import { ToastAction, Toaster } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { Github, ThemeToggle } from '@/components/widgets'
-import { useSegmenter, type SupportBackend } from '@/libs/segmenter/index'
+import { type SupportBackend, useSegmenter } from '@/libs/segmenter/index'
 import { useClipboard, useDebounceFn, useUrlSearchParams } from '@vueuse/core'
 import { h, ref } from 'vue'
 
@@ -56,7 +56,7 @@ const selectAll = () => {
         resetSelect()
         return
     }
-    selectedIndices.value = new Set(Array(segmented.value.length).keys())
+    selectedIndices.value = new Set(Array.from({ length: segmented.value.length }).keys())
 }
 
 const switchSelectState = (index: number) => {
@@ -67,12 +67,29 @@ const switchSelectState = (index: number) => {
     }
 }
 
-
 const copyToClipboard = () => {
+    if (selectedIndices.value.size === 0) {
+        toast({
+            title: '复制失败！',
+            description: '请先选择要复制的文本。',
+            variant: 'destructive',
+        })
+        return
+    }
     let result = ''
     for (let i = 0; i < segmented.value.length; i++) {
         if (selectedIndices.value.has(i)) {
-            result += segmented.value[i]
+            const word = segmented.value[i]
+            const last = result.at(-1) ?? ''
+            if (i !== 0) { // Add space between words
+                if (last.match(/\w$/g) && word !== '-') {
+                    // If last word is a English character and current word is not a hyphen
+                    result += ' '
+                } else if (word.match(/^\w/g) && last !== '-') {
+                    result += ' '
+                }
+            }
+            result += word
         }
     }
     copy(result)
