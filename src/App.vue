@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { Button, Tag } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { TextArea } from '@/components/ui/textarea'
 import { ToastAction, Toaster } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { Github, ThemeToggle } from '@/components/widgets'
-import { jieba } from '@/libs/jieba'
+import { useSegmenter } from '@/libs/segmenter/index'
 import { useClipboard, useDebounceFn, useUrlSearchParams } from '@vueuse/core'
 import { h, ref } from 'vue'
+
+const BACKEND = 'jieba'
+
+const segmenter = useSegmenter(BACKEND)
 
 const { toast } = useToast()
 const { copy } = useClipboard({ legacy: true })
@@ -21,13 +24,15 @@ const URLText = decodeURIComponent(
 )
 
 const inputText = ref(URLText)
+const isSegmentReady = ref(false)
 const segmented = ref<string[]>([])
 const selectedIndices = ref(new Set<number>())
-const jiebaLoaded = ref(false)
 
 const segment = useDebounceFn(async () => {
-    if (!jiebaLoaded.value) return
-    segmented.value = await jieba.cut(inputText.value)
+    if (!inputText.value) {
+        return
+    }
+    segmented.value = await segmenter.segment(inputText.value)
     selectedIndices.value.clear()
 }, 500)
 
@@ -76,10 +81,15 @@ const switchSelectState = (index: number) => {
     }
 }
 
-jieba.init().then(() => {
-    jiebaLoaded.value = true
+segmenter.init().then(() => {
+    isSegmentReady.value = true
     segment()
 })
+
+const backendLink = {
+    jieba: ['jieba-wasm', 'https://github.com/fengkx/jieba-wasm'],
+    intl: ['Intl.Segmenter', 'https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter'],
+}
 </script>
 
 <template>
@@ -93,7 +103,7 @@ jieba.init().then(() => {
                     <ThemeToggle />
                 </CardTitle>
                 <CardDescription class="text-sm text-center">
-                    基于 <a href="https://github.com/fengkx/jieba-wasm" target="_blank">jieba-wasm</a> 本地运行，不会上传任何数据🔒。
+                    基于 <a :href="backendLink[BACKEND][1]" target="_blank">{{ backendLink[BACKEND][0] }}</a> 本地运行，不会上传任何数据🔒。
                 </CardDescription>
             </CardHeader>
             <CardContent class="flex flex-col h-[calc(100%-7rem)]">
@@ -102,6 +112,7 @@ jieba.init().then(() => {
                         v-model="inputText"
                         placeholder="输入文本进行分词..."
                         class="flex-grow resize-none min-h-30% max-h-30%"
+                        :disabled="!isSegmentReady"
                         @input="segment"
                     />
                     <div class="flex items-center flex-gap-4">
@@ -115,7 +126,7 @@ jieba.init().then(() => {
                             复制
                         </Button>
                     </div>
-                    <ScrollArea class="flex-grow h-full border rounded-lg">
+                    <div class="flex-grow h-full border rounded-lg overflow-y-scroll overflow-x-hidden">
                         <Tag
                             v-for="(word, index) in segmented" :key="index"
                             class="m-1 overflow-hidden max-w-full truncate"
@@ -124,7 +135,7 @@ jieba.init().then(() => {
                         >
                             {{ word }}
                         </Tag>
-                    </ScrollArea>
+                    </div>
                 </div>
             </CardContent>
         </Card>
