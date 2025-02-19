@@ -5,11 +5,11 @@ import { TextArea } from '@/components/ui/textarea'
 import { ToastAction, Toaster } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { Github, ThemeToggle } from '@/components/widgets'
-import { useSegmenter } from '@/libs/segmenter/index'
+import { useSegmenter, type SupportBackend } from '@/libs/segmenter/index'
 import { useClipboard, useDebounceFn, useUrlSearchParams } from '@vueuse/core'
 import { h, ref } from 'vue'
 
-const BACKEND = 'jieba'
+const BACKEND: SupportBackend = 'jieba'
 
 const segmenter = useSegmenter(BACKEND)
 
