@@ -122,13 +122,13 @@ segmenter.init().then(() => {
     <Toaster />
     <div class="flex items-center justify-center min-h-screen p-4 bg-background">
         <Card class="w-full max-w-md h-[calc(100vh-2rem)]">
-            <CardHeader class="py-6">
-                <CardTitle class="text-2xl font-bold text-center text-primary flex justify-center items-center gap-1">
-                    <Github />
+            <CardHeader>
+                <CardTitle class="text-2xl font-bold text-primary flex items-center">
                     在线中文分词
+                    <Github />
                     <ThemeToggle />
                 </CardTitle>
-                <CardDescription class="text-sm text-center">
+                <CardDescription class="text-sm">
                     基于 <a :href="backendLink[BACKEND][1]" target="_blank">{{ backendLink[BACKEND][0] }}</a> 本地运行，不会上传任何数据🔒。
                 </CardDescription>
             </CardHeader>
