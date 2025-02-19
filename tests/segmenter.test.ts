@@ -1,7 +1,7 @@
-import { splitTextByURL, useSegmenter } from '@/libs/segmenter'
+import { splitTextByURL, supportBackends, useSegmenter } from '@/libs/segmenter'
 import { expect, it } from 'vitest'
 
-for (const backend of ['jieba', 'intl'] as const) {
+for (const backend of supportBackends) {
     const segmenter = useSegmenter(backend)
 
     await segmenter.init()
