@@ -11,6 +11,11 @@ import { h, ref } from 'vue'
 
 const BACKEND: SupportBackend = 'jieba'
 
+const backendLink: Record<SupportBackend, [string, string]> = {
+    jieba: ['jieba-wasm', 'https://github.com/fengkx/jieba-wasm'],
+    intl: ['Intl.Segmenter', 'https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter'],
+}
+
 const segmenter = useSegmenter(BACKEND)
 
 const { toast } = useToast()
@@ -46,6 +51,23 @@ const resetSelect = () => {
     selectedIndices.value.clear()
 }
 
+const selectAll = () => {
+    if (selectedIndices.value.size === segmented.value.length) { // all selected
+        resetSelect()
+        return
+    }
+    selectedIndices.value = new Set(Array(segmented.value.length).keys())
+}
+
+const switchSelectState = (index: number) => {
+    if (selectedIndices.value.has(index)) {
+        selectedIndices.value.delete(index)
+    } else {
+        selectedIndices.value.add(index)
+    }
+}
+
+
 const copyToClipboard = () => {
     let result = ''
     for (let i = 0; i < segmented.value.length; i++) {
@@ -73,30 +95,17 @@ const copyToClipboard = () => {
         })
 }
 
-const switchSelectState = (index: number) => {
-    if (selectedIndices.value.has(index)) {
-        selectedIndices.value.delete(index)
-    } else {
-        selectedIndices.value.add(index)
-    }
-}
-
 segmenter.init().then(() => {
     isSegmentReady.value = true
     segment()
 })
-
-const backendLink = {
-    jieba: ['jieba-wasm', 'https://github.com/fengkx/jieba-wasm'],
-    intl: ['Intl.Segmenter', 'https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter'],
-}
 </script>
 
 <template>
     <Toaster />
     <div class="flex items-center justify-center min-h-screen p-4 bg-background">
         <Card class="w-full max-w-md h-[calc(100vh-2rem)]">
-            <CardHeader>
+            <CardHeader class="py-6">
                 <CardTitle class="text-2xl font-bold text-center text-primary flex justify-center items-center gap-1">
                     <Github />
                     在线中文分词
@@ -118,6 +127,9 @@ const backendLink = {
                     <div class="flex items-center flex-gap-4">
                         <Button variant="outline" @click="clearInput">
                             清空
+                        </Button>
+                        <Button variant="outline" @click="selectAll">
+                            {{ selectedIndices.size !== 0 && selectedIndices.size === segmented.length ? '取消全选' : '全选' }}
                         </Button>
                         <Button variant="outline" @click="resetSelect">
                             重选
