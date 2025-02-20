@@ -35,6 +35,7 @@ const selectedIndices = ref(new Set<number>())
 
 const segment = useDebounceFn(async () => {
     if (!inputText.value) {
+        segmented.value = []
         return
     }
     segmented.value = await segmenter.segment(inputText.value)
