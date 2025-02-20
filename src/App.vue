@@ -122,7 +122,7 @@ segmenter.init().then(() => {
         <Card class="w-full max-w-md h-[calc(100vh-2rem)]">
             <CardHeader>
                 <CardTitle class="text-2xl font-bold text-primary flex items-center">
-                    在线中文分词
+                    网页中文分词
                     <Github />
                     <ThemeToggle />
                 </CardTitle>
