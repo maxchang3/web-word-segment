@@ -29,7 +29,7 @@ const URLText = decodeURIComponent(
 )
 
 const inputText = ref(URLText)
-const isSegmentReady = ref(false)
+const isSegmenterReady = ref(false)
 const segmented = ref<string[]>([])
 const selectedIndices = ref(new Set<number>())
 
@@ -114,7 +114,7 @@ const copyToClipboard = () => {
 }
 
 segmenter.init().then(() => {
-    isSegmentReady.value = true
+    isSegmenterReady.value = true
     segment()
 })
 </script>
@@ -139,7 +139,7 @@ segmenter.init().then(() => {
                         v-model="inputText"
                         placeholder="输入文本进行分词..."
                         class="flex-grow resize-none min-h-30% max-h-30%"
-                        :disabled="!isSegmentReady"
+                        :disabled="!isSegmenterReady"
                         @input="segment"
                     />
                     <div class="flex items-center flex-gap-4">
