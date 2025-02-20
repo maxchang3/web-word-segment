@@ -28,22 +28,22 @@ const URLText = decodeURIComponent(
         : (params.text as string | undefined) ?? '',
 )
 
-const inputText = ref(URLText)
+const input = ref(URLText)
 const isSegmenterReady = ref(false)
 const segmented = ref<string[]>([])
 const selectedIndices = ref(new Set<number>())
 
 const segment = useDebounceFn(async () => {
-    if (!inputText.value) {
+    if (!input.value) {
         segmented.value = []
         return
     }
-    segmented.value = await segmenter.segment(inputText.value)
+    segmented.value = await segmenter.segment(input.value)
     selectedIndices.value.clear()
 }, 500)
 
 const clearInput = () => {
-    inputText.value = ''
+    input.value = ''
     segmented.value = []
     selectedIndices.value.clear()
 }
@@ -136,7 +136,7 @@ segmenter.init().then(() => {
             <CardContent class="flex flex-col h-[calc(100%-7rem)]">
                 <div class="h-full flex flex-col space-y-4">
                     <TextArea
-                        v-model="inputText"
+                        v-model="input"
                         placeholder="输入文本进行分词..."
                         class="flex-grow resize-none min-h-30% max-h-30%"
                         :disabled="!isSegmenterReady"
