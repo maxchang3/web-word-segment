@@ -5,21 +5,15 @@ import { TextArea } from '@/components/ui/textarea'
 import { ToastAction, Toaster } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { Github, ThemeToggle } from '@/components/widgets'
-import { type SupportBackend, useSegmenter } from '@/libs/segmenter/index'
+import { backendData, type SupportBackend, useSegmenter } from '@/libs/segmenter/index'
 import { useClipboard, useDebounceFn, useUrlSearchParams } from '@vueuse/core'
 import { h, ref } from 'vue'
 
 const BACKEND: SupportBackend = 'jieba'
 
-const backendLink: Record<SupportBackend, [string, string]> = {
-    jieba: ['jieba-wasm', 'https://github.com/fengkx/jieba-wasm'],
-    intl: ['Intl.Segmenter', 'https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter'],
-}
+const [backendName, backendURL] = backendData[BACKEND]
 
 const segmenter = useSegmenter(BACKEND)
-
-const { toast } = useToast()
-const { copy } = useClipboard({ legacy: true })
 const params = useUrlSearchParams('history')
 
 const URLText = decodeURIComponent(
@@ -27,6 +21,9 @@ const URLText = decodeURIComponent(
         ? params.text.join('')
         : (params.text as string | undefined) ?? '',
 )
+
+const { toast } = useToast()
+const { copy } = useClipboard({ legacy: true })
 
 const input = ref(URLText)
 const isSegmenterReady = ref(false)
@@ -130,7 +127,7 @@ segmenter.init().then(() => {
                     <ThemeToggle />
                 </CardTitle>
                 <CardDescription class="text-sm">
-                    基于 <a :href="backendLink[BACKEND][1]" target="_blank">{{ backendLink[BACKEND][0] }}</a> 本地运行，不会上传任何数据🔒。
+                    基于 <a :href="backendURL" target="_blank">{{ backendName }}</a> 本地运行，不会上传任何数据🔒。
                 </CardDescription>
             </CardHeader>
             <CardContent class="flex flex-col h-[calc(100%-7rem)]">
