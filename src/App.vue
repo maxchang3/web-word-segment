@@ -127,7 +127,7 @@ segmenter.init().then(() => {
                     <ThemeToggle />
                 </CardTitle>
                 <CardDescription class="text-sm">
-                    基于 <a :href="backendURL" target="_blank">{{ backendName }}</a> 本地运行，不会上传任何数据🔒。
+                    基于 <a :href="backendURL" target="_blank">{{ backendName }}</a> 本地运行，不上传任何数据。
                 </CardDescription>
             </CardHeader>
             <CardContent class="flex flex-col h-[calc(100%-7rem)]">
