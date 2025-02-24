@@ -14,6 +14,11 @@
         Helvetica,
         Arial,
         sans-serif;
+    --selected: 280 23% 31%;
+}
+
+.dark {
+    --selected: 280 23% 31%;
 }
 
 html,

@@ -26,4 +26,9 @@ export default defineConfig({
     transformers: [
         transformerDirectives(),
     ],
+    theme: {
+        colors: {
+            selected: 'hsl(var(--selected))',
+        },
+    },
 })

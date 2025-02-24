@@ -37,12 +37,12 @@ export const buttonVariants = cva(
 export type ButtonVariants = VariantProps<typeof buttonVariants>
 
 export const labelVariants = cva(
-    'transition-colors border border-gray-300 rounded-full',
+    'transition-colors border border-gray-300 rounded',
     {
         variants: {
             variant: {
-                default: 'bg-background hover:bg-muted  text-primary',
-                active: 'bg-primary text-primary-foreground',
+                default: 'bg-primary-foreground hover:bg-muted  text-primary',
+                active: 'bg-selected text-white',
             },
             size: {
                 default: 'h-9 px-4',
