@@ -5,7 +5,7 @@ import { TextArea } from '@/components/ui/textarea'
 import { ToastAction, Toaster } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { Github, ThemeToggle } from '@/components/widgets'
-import { backendData, type SupportBackend, useSegmenter } from '@/libs/segmenter/index'
+import { backendData, type SupportBackend, useSegmenter } from '@/libs/segmenter'
 import { useClipboard, useDebounceFn, useUrlSearchParams } from '@vueuse/core'
 import { h, ref } from 'vue'
 
