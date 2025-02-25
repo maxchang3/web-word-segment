@@ -1,0 +1,17 @@
+#define name Segment Tool
+#define glyph noteText
+#define color teal
+
+#define from sleepmode
+#define inputs  text
+#define noinput getclipboard
+
+
+const input = urlEncode(ShortcutInput)
+
+const template = "<h1>{input}</h1>"
+
+const entry = setName(input, "index.html")
+
+showWebpage(entry)
+
