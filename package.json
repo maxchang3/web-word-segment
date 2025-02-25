@@ -3,10 +3,11 @@
   "type": "module",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@10.4.0",
+  "packageManager": "pnpm@10.5.0",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
+    "build:shortcuts": "export VITE_TARGET=shortcuts && pnpm build",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
@@ -42,6 +43,7 @@
     "unocss-preset-animations": "^1.1.1",
     "unocss-preset-shadcn": "^0.3.2",
     "vite": "^6.0.11",
+    "vite-plugin-singlefile": "^2.1.0",
     "vite-plugin-vue-devtools": "^7.7.2",
     "vitest": "^3.0.5",
     "vue-tsc": "^2.2.0"

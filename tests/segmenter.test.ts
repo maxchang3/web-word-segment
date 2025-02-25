@@ -1,4 +1,4 @@
-import { splitTextByURL, supportBackends, useSegmenter } from '@/libs/segmenter'
+import { splitTextByURL, supportBackends, useSegmenter } from '@/libs/segmenter/web'
 import { expect, it } from 'vitest'
 
 for (const backend of supportBackends) {
