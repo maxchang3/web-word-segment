@@ -27,7 +27,7 @@ A Web App for Chinese Word Segmentation based on [jieba-wasm](https://github.com
 
         - [ ] PWA 版本
         - [ ] iOS 快捷指令集成
-            - [ ] 单文件精简版
+            - [x] 单文件精简版
                 - 仅使用 Intl.Segmenter
                 - 所有资源合并为单一文件
             - [ ] 单文件仅前端展示版
@@ -48,7 +48,7 @@ Overall Goal: Build a Chinese Word Segmentation PWA App. Use with iOS Shortcuts 
 
         - [ ] PWA Version
         - [ ] iOS Shortcuts Integration
-            - [ ] Single File Version
+            - [x] Single File Version
                 - Only use Intl.Segmenter
                 - All resources merged into a single file
             - [ ] Single File Frontend Only Version
